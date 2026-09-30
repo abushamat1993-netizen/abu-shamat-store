@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض أبو شمط للإنارة والأدوات الكهربائية - عروض مميزة</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- شريط العلوي (Header) -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-amber-500 text-slate-900 p-2 rounded-xl font-black text-xl shadow">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold">معرض أبو شمط</h1>
+                    <p class="text-xs text-amber-400">للإنارة والأدوات الكهربائية</p>
+                </div>
+            </div>
+            <div>
+                <button onclick="checkAdminAccess()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2 rounded-lg text-sm shadow transition flex items-center gap-2">
+                    <i class="fa-solid fa-gear"></i> لوحة التحكم
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم الهبوط (Hero Section) -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 text-white py-16 px-4 text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-sm font-semibold px-4 py-1.5 rounded-full inline-block mb-4">
+                🔥 عروض لفترة محدودة
+            </span>
+            <h2 class="text-3xl md:text-5xl font-black mb-6 leading-tight">أحدث تشكيلات الإنارة والثريات والقطع الكهربائية بأفضل الأسعار</h2>
+            <p class="text-gray-300 text-base md:text-lg mb-8 max-w-2xl mx-auto">تجهيز الفلل، المنازل، والمشاريع التجارية بأجود أنواع الإضاءة وقطع الحماية. اطلب الآن واستفد من العروض!</p>
+            <a href="#products" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-8 py-3.5 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 inline-block text-lg">
+                تصفح العروض الآن
+            </a>
+        </div>
+    </section>
+
+    <!-- قسم المنتجات والعروض -->
+    <main id="products" class="max-w-7xl mx-auto px-4 py-12">
+        <div class="text-center mb-10">
+            <h3 class="text-2xl md:text-3xl font-black text-slate-900 mb-2">عروض المنتجات المميزة</h3>
+            <p class="text-gray-600 text-sm">اختر منتجك وابدأ الطلب الفوري عبر الواتساب</p>
+        </div>
+
+        <!-- حاوية المنتجات -->
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- تعبئة تلقائية -->
+        </div>
+    </main>
+
+    <!-- زر واتساب عائم -->
+    <a id="whatsappFloat" href="#" target="_blank" class="fixed bottom-6 left-6 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl z-40 transition transform hover:scale-110">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- نافذة لوحة التحكم (Admin Modal) -->
+    <div id="adminModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-amber-500"></i> لوحة تحكم المتجر والعروض
+                </h3>
+                <button onclick="toggleAdminPanel()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            </div>
+
+            <!-- إعدادات رقم الواتساب -->
+            <div class="mb-8 bg-gray-50 p-4 rounded-xl border">
+                <h4 class="font-bold text-slate-800 mb-2 text-sm">رقم الواتساب الخاص بالمتجر</h4>
+                <div class="flex gap-2">
+                    <input type="text" id="whatsappInput" placeholder="مثال: 970590000000" class="flex-1 border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                    <button onclick="saveWhatsApp()" class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-800">حفظ الرقم</button>
+                </div>
+            </div>
+
+            <!-- نموذج إضافة منتج جديد -->
+            <div class="bg-amber-50/50 border border-amber-200 p-4 rounded-xl mb-6">
+                <h4 class="font-bold text-slate-900 mb-3 text-sm" id="formTitle">إضافة عرض أو منتج جديد</h4>
+                <input type="hidden" id="editIndex" value="-1">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">اسم المنتج/العرض</label>
+                        <input type="text" id="prodTitle" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="مثال: ثريا ليد مودرن">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">رابط صورة المنتج</label>
+                        <input type="text" id="prodImage" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">السعر الحالي ($)</label>
+                        <input type="number" id="prodPrice" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="45">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">السعر القديم قبل الخصم ($)</label>
+                        <input type="number" id="prodOldPrice" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="60">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">وصف قصير للمنتج</label>
+                    <textarea id="prodDesc" rows="2" class="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" placeholder="وصف مميزات العرض..."></textarea>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="saveProduct()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2 rounded-lg text-sm shadow">حفظ المنتج</button>
+                    <button onclick="resetForm()" id="cancelEditBtn" class="hidden bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold">إلغاء</button>
+                </div>
+            </div>
+
+            <!-- قائمة المنتجات الحالية للإدارة -->
+            <div>
+                <h4 class="font-bold text-slate-800 mb-3 text-sm">المنتجات الحالية في المتجر</h4>
+                <div id="adminProductsList" class="space-y-2 max-h-48 overflow-y-auto">
+                    <!-- تعبئة تلقائية -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-slate-900 text-gray-400 py-6 text-center text-xs mt-12 border-t border-slate-800">
+        <p>جميع الحقوق محفوظة © معرض أبو شمط للإنارة والأدوات الكهربائية 2026</p>
+    </footer>
+
+    <!-- البرمجة وتحكم البيانات (JavaScript) -->
+    <script>
+        // كلمة المرور الخاصة بلوحة التحكم (يمكنك تعديلها هنا إذا أردت)
+        const ADMIN_PASSWORD = "1234";
+
+        let defaultProducts = [
+            {
+                title: "ثريا كريستال مودرن فاخرة",
+                image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=500&q=80",
+                price: 85,
+                oldPrice: 120,
+                desc: "إضاءة LED متكاملة، مثالية لغرف المعيشة والمجالس بتصميم عصري راقٍ."
+            },
+            {
+                title: "شريط ليد مخفي (Roll LED 5M)",
+                image: "https://images.unsplash.com/photo-1550985616-11b33b914a24?w=500&q=80",
+                price: 15,
+                oldPrice: 25,
+                desc: "إضاءة دافئة وقوية، عالية الجودة للاستخدام الداخلي والديكورات."
+            },
+            {
+                title: "سبوت لايت LED عالي الإضاءة",
+                image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80",
+                price: 8,
+                oldPrice: 12,
+                desc: "موفر للطاقة، ضمان لمدة سنة، يناسب الأسقف المعلقة."
+            }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('abu_shamt_products')) || defaultProducts;
+        let whatsappNumber = localStorage.getItem('abu_shamt_whatsapp') || '970590000000';
+
+        document.getElementById('whatsappInput').value = whatsappNumber;
+        updateWhatsAppLink();
+        renderStore();
+
+        function renderStore() {
+            const grid = document.getElementById('productsGrid');
+            const adminList = document.getElementById('adminProductsList');
+            
+            grid.innerHTML = '';
+            adminList.innerHTML = '';
+
+            if (products.length === 0) {
+                grid.innerHTML = '<div class="col-span-3 text-center py-10 text-gray-500">لا توجد منتجات حالياً. أضف منتجاتك عبر لوحة التحكم!</div>';
+                adminList.innerHTML = '<p class="text-xs text-gray-400">لا توجد منتجات.</p>';
+                return;
+            }
+
+            products.forEach((p, index) => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition border overflow-hidden flex flex-col justify-between">
+                        <div>
+                            <div class="h-48 overflow-hidden bg-gray-100 relative">
+                                <img src="${p.image || 'https://via.placeholder.com/400'}" alt="${p.title}" class="w-full h-full object-cover">
+                                <span class="absolute top-3 right-3 bg-amber-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg shadow">عرض خاص</span>
+                            </div>
+                            <div class="p-5">
+                                <h4 class="font-bold text-slate-900 text-base mb-1">${p.title}</h4>
+                                <p class="text-gray-500 text-xs mb-4 line-clamp-2">${p.desc}</p>
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="text-xl font-black text-amber-600">${p.price} $</span>
+                                    ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through">${p.oldPrice}$</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-0">
+                            <a href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent('أرغب في طلب والاستفسار عن العرض: ' + p.title + ' - السعر: ' + p.price + '$')}" target="_blank" class="w-full bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-bold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2 shadow">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> اطلب عبر الواتساب
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                adminList.innerHTML += `
+                    <div class="flex items-center justify-between bg-gray-50 p-2.5 rounded-lg border text-sm">
+                        <span class="font-semibold text-slate-800 truncate max-w-[200px]">${p.title}</span>
+                        <div class="flex gap-1.5">
+                            <button onclick="editProduct(${index})" class="bg-blue-500 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-blue-600">تعديل</button>
+                            <button onclick="deleteProduct(${index})" class="bg-red-500 text-white px-2.5 py-1 rounded text-xs font-bold hover:bg-red-600">حذف</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function checkAdminAccess() {
+            const enteredPass = prompt("الرجاء إدخال كلمة مرور لوحة التحكم:");
+            if (enteredPass === null) return; // إذا ضغط إلغاء
+            
+            if (enteredPass === ADMIN_PASSWORD) {
+                toggleAdminPanel();
+            } else {
+                alert("كلمة المرور غير صحيحة!");
+            }
+        }
+
+        function toggleAdminPanel() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function saveWhatsApp() {
+            const val = document.getElementById('whatsappInput').value.trim();
+            if(val) {
+                whatsappNumber = val;
+                localStorage.setItem('abu_shamt_whatsapp', whatsappNumber);
+                updateWhatsAppLink();
+                alert('تم حفظ رقم الواتساب بنجاح!');
+            } else {
+                alert('الرجاء إدخال رقم صحيح');
+            }
+        }
+
+        function updateWhatsAppLink() {
+            document.getElementById('whatsappFloat').href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('مرحباً، أود الاستفسار عن عروض معرض أبو شمط للإنارة والكهرباء.')}`;
+        }
+
+        function saveProduct() {
+            const title = document.getElementById('prodTitle').value.trim();
+            const image = document.getElementById('prodImage').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const oldPrice = parseFloat(document.getElementById('prodOldPrice5').value) || parseFloat(document.getElementById('prodOldPrice').value) || '';
+            const desc = document.getElementById('prodDesc').value.trim();
+            const editIndex = parseInt(document.getElementById('editIndex').value);
+
+            if(!title || isNaN(price)) {
+                alert('الرجاء إدخال عنوان المنتج والسعر على الأقل.');
+                return;
+            }
+
+            const productData = { title, image, price, oldPrice, desc };
+
+            if(editIndex === -1) {
+                products.unshift(productData);
+            } else {
+                products[editIndex] = productData;
+            }
+
+            localStorage.setItem('abu_shamt_products', JSON.stringify(products));
+            renderStore();
+            resetForm();
+            alert('تم الحفظ بنجاح!');
+        }
+
+        function editProduct(index) {
+            const p = products[index];
+            document.getElementById('prodTitle').value = p.title;
+            document.getElementById('prodImage').value = p.image;
+            document.getElementById('prodPrice').value = p.price;
+            document.getElementById('prodOldPrice').value = p.oldPrice;
+            document.getElementById('prodDesc').value = p.desc;
+            document.getElementById('editIndex').value = index;
+            document.getElementById('formTitle').innerText = 'تعديل المنتج / العرض';
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+        }
+
+        function resetForm() {
+            document.getElementById('prodTitle').value = '';
+            document.getElementById('prodImage').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodOldPrice').value = '';
+            document.getElementById('prodDesc').value = '';
+            document.getElementById('editIndex').value = '-1';
+            document.getElementById('formTitle').innerText = 'إضافة عرض أو منتج جديد';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        function deleteProduct(index) {
+            if(confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                products.splice(index, 1);
+                localStorage.setItem('abu_shamt_products', JSON.stringify(products));
+                renderStore();
+            }
+        }
+    </script>
+</body>
+</html>
